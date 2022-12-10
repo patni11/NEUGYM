@@ -1,0 +1,32 @@
+{
+  "name": "northeasterngym",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.4.0",
+    "@types/puppeteer": "^5.4.7",
+    "@upstash/qstash": "^0.1.7",
+    "fs": "^0.0.1-security",
+    "next": "12.3.1",
+    "puppeteer": "^19.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tesseract.js": "^1.0.19",
+    "tesseract.ts": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.23",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "prisma": "^4.4.0",
+    "typescript": "4.8.4"
+  }
+}

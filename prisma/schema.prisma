@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+
+enum Day {
+  Sun
+  Mon
+  Tue
+  Wed
+  Thu
+  Fri
+  Sat
+}
+
+enum Location {
+  Marino2Floor
+  MarinoGymnasium
+  Marino3Floor
+  MarinoCardio
+  MarinoTrack
+  SquashBusters
+}
+
+model Period {
+  id              Int       @default(autoincrement()) @id
+  createdAt       DateTime  @default(now())
+  time            String    @default("")
+  frequency       Int       @default(0)
+  day             String    @default("")
+  loc             Location  @default(MarinoCardio)
+}
+
+

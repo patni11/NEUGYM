@@ -1,99 +1,99 @@
-const { save } = require("./storeData.ts");
-const {
-  gymToFile,
-  Timings,
-  daysOfWeek,
-  dayOptions,
-  generateTimeSlots,
-  allGyms,
-  weekDays,
-  weekEnds,
-  timeOptions,
-  roundToNearest30,
-} = require("./constants");
+// const { save } = require("./storeData.ts");
+// const {
+//   gymToFile,
+//   Timings,
+//   daysOfWeek,
+//   dayOptions,
+//   generateTimeSlots,
+//   allGyms,
+//   weekDays,
+//   weekEnds,
+//   timeOptions,
+//   roundToNearest30,
+// } = require("./constants");
 
-const GymValues = Object.keys(gymToFile);
-const fs = require("fs");
-const cron = require("node-cron");
-const { scraper } = require("./scraper");
+// const GymValues = Object.keys(gymToFile);
+// const fs = require("fs");
+// const cron = require("node-cron");
+// const { scraper } = require("./scraper");
 
-let personCount;
-let HalfHourJob;
+// let personCount;
+// let HalfHourJob;
 
-function main() {
-  const wholeDate = new Date().toLocaleString("en-US", dayOptions); //Whole day looks like 'Wed, 9/21/2022'
-  const day = wholeDate.split(",")[0];
-  const CurrentTime = new Date().toLocaleString("en-US", timeOptions);
+// function main() {
+//   const wholeDate = new Date().toLocaleString("en-US", dayOptions); //Whole day looks like 'Wed, 9/21/2022'
+//   const day = wholeDate.split(",")[0];
+//   const CurrentTime = new Date().toLocaleString("en-US", timeOptions);
 
-  if (CurrentTime >= "23:53") {
-    HalfHourJob.destroy();
-    console.log("Finished Today's work destroying cron");
-    return;
-  }
-  console.log("running main");
-  const HalfHourJob = cron.schedule(
-    "*/30 * * * *",
-    async () => {
-      try {
-        console.log("Running cron");
-        personCount = await scraper();
-        console.log(personCount);
-        const CT = new Date().toLocaleString("en-US", timeOptions); // current Time
-        const roundedTime = roundToNearest30(CT);
+//   if (CurrentTime >= "23:53") {
+//     HalfHourJob.destroy();
+//     console.log("Finished Today's work destroying cron");
+//     return;
+//   }
+//   console.log("running main");
+//   const HalfHourJob = cron.schedule(
+//     "*/1 * * * *",
+//     async () => {
+//       try {
+//         console.log("Running cron");
+//         personCount = await scraper();
+//         console.log(personCount);
+//         const CT = new Date().toLocaleString("en-US", timeOptions); // current Time
+//         const roundedTime = roundToNearest30(CT);
 
-        console.log("running Saves");
-        await save("Marino2Floor", personCount[0], roundedTime, day);
-        await save("MarinoGymnasium", personCount[1], roundedTime, day);
-        await save("Marino3Floor", personCount[2], roundedTime, day);
-        await save("MarinoCardio", personCount[3], roundedTime, day);
-        await save("MarinoTrack", personCount[4], roundedTime, day);
+//         console.log("running Saves");
+//         await save("Marino2Floor", personCount[0], roundedTime, day);
+//         await save("MarinoGymnasium", personCount[1], roundedTime, day);
+//         await save("Marino3Floor", personCount[2], roundedTime, day);
+//         await save("MarinoCardio", personCount[3], roundedTime, day);
+//         await save("MarinoTrack", personCount[4], roundedTime, day);
 
-        if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
-          if (roundedTime >= Timings.SquashWeekdayStartTime) {
-            await save("SquashBusters", personCount[5], roundedTime, day);
-          }
-        } else {
-          if (day == "Sat") {
-            if (roundedTime >= Timings.SquashSatStartTime) {
-              await save("SquashBusters", personCount[5], roundedTime, day);
-            }
-          } else {
-            if (roundedTime >= Timings.SquashSunStartTime) {
-              await save("SquashBusters", personCount[5], roundedTime, day);
-            }
-          }
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    {
-      timezone: "America/New_York",
-    }
-  );
-}
+//         if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
+//           if (roundedTime >= Timings.SquashWeekdayStartTime) {
+//             await save("SquashBusters", personCount[5], roundedTime, day);
+//           }
+//         } else {
+//           if (day == "Sat") {
+//             if (roundedTime >= Timings.SquashSatStartTime) {
+//               await save("SquashBusters", personCount[5], roundedTime, day);
+//             }
+//           } else {
+//             if (roundedTime >= Timings.SquashSunStartTime) {
+//               await save("SquashBusters", personCount[5], roundedTime, day);
+//             }
+//           }
+//         }
+//       } catch (e) {
+//         console.log(e);
+//       }
+//     },
+//     {
+//       timezone: "America/New_York",
+//     }
+//   );
+// }
 
-// A Cron job that starts everyday at 5:30
-// starts the main module to control scraper and saving
-cron.schedule(
-  "0 30 5 * * 1-5",
-  () => {
-    console.log("Strating weekday");
-    main();
-  },
-  { timezone: "America/New_York" }
-);
+// // A Cron job that starts everyday at 5:30
+// // starts the main module to control scraper and saving
+// cron.schedule(
+//   "0 30 5 * * 1-5",
+//   () => {
+//     console.log("Strating weekday");
+//     main();
+//   },
+//   { timezone: "America/New_York" }
+// );
 
-// A Cron job that starts weekends at 8:00
-// starts the main module to control scraper and saving
-cron.schedule(
-  "0 0 6 * * 6-7",
-  async () => {
-    console.log("starting weekend");
-    main();
-  },
-  { timezone: "America/New_York" }
-);
+// // A Cron job that starts weekends at 8:00
+// // starts the main module to control scraper and saving
+// cron.schedule(
+//   "0 12 17 * * 6-7",
+//   async () => {
+//     console.log("starting weekend");
+//     main();
+//   },
+//   { timezone: "America/New_York" }
+// );
 
 // A cron job that saves daily data to main CSV
 //

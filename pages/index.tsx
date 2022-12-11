@@ -4,15 +4,24 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { prisma } from '../server/db/client'
+import { useEffect, useState } from 'react'
 
+interface Gym {
+  loc: string;
+  day: string;
+  time: string;
+  frequency: number;
+}
 
-const Home: NextPage = ({gym}) => {
+const Home = ({gym}:{gym:Gym[]}) => {
 
   const runFunc = async () => {
     console.log('running');
     const { data } = await axios.post('/api/scraper');
     console.log(data)
   }
+
+  
 
   return (
     <div className={styles.container}>
@@ -25,15 +34,17 @@ const Home: NextPage = ({gym}) => {
 
 
 <div>
-          {gym.map((period:any) => (
-            <div key={period.time}>
-              <h4>{period.loc}</h4>
-              <h5>{period._avg.frequency}</h5>
-              <h6>{period.day}</h6>
-              <h6>{period.time}</h6>
-            </div>
 
-          ))}
+{gym.map((gym,i) => {
+  return (
+    <div key={i}>
+      <p>{gym.loc}</p>
+      <p>{gym.day}</p>
+      <p>{gym.time}</p>
+      <p>{gym.frequency}</p>
+    </div>
+  )})}
+  
 </div>
 
         <button onClick={runFunc}> RUN </button>
@@ -45,15 +56,17 @@ const Home: NextPage = ({gym}) => {
 
 export async function getServerSideProps() {
 // get the most recent data till past week from the database based on date 
-const gym = await prisma.period.groupBy({
+const data = await prisma.period.groupBy({
   by: ['loc','day','time'],
   _avg: {
     frequency: true,
   },
 })
 
+console.log()
+
   return {
-    props: {gym: JSON.parse(JSON.stringify(gym))}
+    props: {gym: JSON.parse(JSON.stringify(data))}
   }
 }
 

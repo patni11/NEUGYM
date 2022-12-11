@@ -5,7 +5,7 @@ generator client {
   provider = "prisma-client-js"
 }
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url = env("DATABASE_URL")
 }
 
@@ -37,5 +37,4 @@ model Period {
   day             String    @default("")
   loc             Location  @default(MarinoCardio)
 }
-
 

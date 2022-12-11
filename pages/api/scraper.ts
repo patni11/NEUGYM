@@ -6,6 +6,7 @@ import { scraper } from "../../scraper";
 import { save } from "../storeData";
 import { Location } from "@prisma/client";
 import { Day } from "../../constants";
+
 import {
   dayOptions,
   timeOptions,
@@ -99,11 +100,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default handler;
-// export default verifySignature(handler);
+// export default handler;
+export default verifySignature(handler);
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

@@ -52,8 +52,6 @@ const gym = await prisma.period.groupBy({
   },
 })
 
-console.log(JSON.parse(JSON.stringify(gym)))
-
   return {
     props: {gym: JSON.parse(JSON.stringify(gym))}
   }

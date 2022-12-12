@@ -2,7 +2,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { verifySignature } from "@upstash/qstash/nextjs";
-import { scraper } from "../../scraper";
+import { scraper } from "../../components/scraper";
 import { save } from "../../components/storeData";
 import { Location } from "@prisma/client";
 import { Day } from "../../constants";

@@ -1,8 +1,6 @@
 import * as puppeteer from "puppeteer";
 import { Tesseract } from "tesseract.ts";
-import * as fs from "fs";
 import { url } from "../constants";
-import path from "path";
 
 async function scrapeData(url: string) {
   const browser = await puppeteer.launch();

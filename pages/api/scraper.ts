@@ -90,7 +90,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         }
       }
 
-      res.status(200).json({ success: true });
+      res.send("OK");
     } catch ({ message }) {
       res.status(500).json({ statusCode: 500, message: message });
     }

@@ -2,25 +2,26 @@ import * as puppeteer from "puppeteer";
 import { Tesseract } from "tesseract.ts";
 import * as fs from "fs";
 import { url } from "../constants";
+import path from "path";
 
 async function scrapeData(url: string) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
-  await page.screenshot({ path: "example.png", fullPage: true });
+  await page.screenshot({ path: "/tmp/example.png", fullPage: true });
   await browser.close();
   await recognizeText();
 }
 
 async function recognizeText() {
-  await Tesseract.recognize("./example.png", "eng").then(({ text }) => {
-    fs.writeFileSync("./siteRawData.txt", text);
+  await Tesseract.recognize("/tmp/example.png", "eng").then(({ text }) => {
+    fs.writeFileSync("/tmp/siteRawData.txt", text);
   });
 }
 
 async function cleanData() {
   const personCount = [];
-  const data = await fs.readFileSync("./siteRawData.txt", {
+  const data = await fs.readFileSync("/tmp/siteRawData.txt", {
     encoding: "utf8",
     flag: "r",
   });

@@ -8,35 +8,31 @@ async function scrapeData(url: string) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
-  await page.screenshot({ path: "/tmp/example.png", fullPage: true });
+  const image = await page.screenshot({
+    type: "jpeg",
+    quality: 100,
+    omitBackground: true,
+    fullPage: true,
+  });
+  // const base64Image = await image.toString('base64');
+  // await page.screenshot({ path: "/tmp/example.png", fullPage: true });
   await browser.close();
-  await recognizeText();
-}
+  const personCount: string[] = [];
 
-async function recognizeText() {
-  await Tesseract.recognize("/tmp/example.png", "eng").then(({ text }) => {
-    fs.writeFileSync("/tmp/siteRawData.txt", text);
-  });
-}
-
-async function cleanData() {
-  const personCount = [];
-  const data = await fs.readFileSync("/tmp/siteRawData.txt", {
-    encoding: "utf8",
-    flag: "r",
-  });
-  const values = data.split("\n") || "";
-  try {
-    for (var line of values) {
-      if (line.includes("Last Count")) {
-        for (var each of line?.replace(/\s+/, "").match(/(\d+)/g) || "") {
-          personCount.push(each);
+  await Tesseract.recognize(image, "eng").then(({ text }) => {
+    const values = text.split("\n") || "";
+    try {
+      for (var line of values) {
+        if (line.includes("Last Count")) {
+          for (var each of line?.replace(/\s+/, "").match(/(\d+)/g) || "") {
+            personCount.push(each);
+          }
         }
       }
+    } catch (e) {
+      console.log(e);
     }
-  } catch (e) {
-    console.log(e);
-  }
+  });
   return personCount;
 }
 
@@ -44,8 +40,7 @@ export async function scraper() {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("scraping");
-      await scrapeData(url);
-      const personCount = await cleanData();
+      const personCount = await scrapeData(url);
       resolve(personCount);
     } catch (e) {
       reject(e);

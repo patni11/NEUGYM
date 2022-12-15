@@ -12,6 +12,7 @@ async function scrapeData(url: string) {
     omitBackground: true,
     fullPage: true,
   });
+  console.log("took screen shot");
   // const base64Image = await image.toString('base64');
   // await page.screenshot({ path: "/tmp/example.png", fullPage: true });
   await browser.close();
@@ -27,7 +28,9 @@ async function scrapeData(url: string) {
           }
         }
       }
+      console.log("read screen shot inside try");
     } catch (e) {
+      console.log("oops hit the catch while using tesseract");
       console.log(e);
     }
   });
@@ -39,6 +42,7 @@ export async function scraper() {
     try {
       console.log("scraping");
       const personCount = await scrapeData(url);
+      console.log("scraping done, here the person count", personCount);
       resolve(personCount);
     } catch (e) {
       reject(e);

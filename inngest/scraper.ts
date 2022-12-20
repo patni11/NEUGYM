@@ -3,78 +3,22 @@
 // import { NextApiRequest, NextApiResponse } from "next";
 // import { verifySignature } from "@upstash/qstash/nextjs";
 import { Location } from "@prisma/client";
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import { Tesseract } from "tesseract.ts";
 import axios from "axios";
 import { createScheduledFunction } from "inngest";
+import chrome from "chrome-aws-lambda";
+import { executablePath } from "puppeteer";
 
-const url =
-  "https://connect2concepts.com/connect2/?type=circle&key=2A2BE0D8-DF10-4A48-BEDD-B3BC0CD628E7";
-
-enum Day {
-  Sun = "Sun",
-  Mon = "Mon",
-  Tue = "Tue",
-  Wed = "Wed",
-  Thu = "Thu",
-  Fri = "Fri",
-  Sat = "Sat",
-}
-
-const Timings = {
-  MarinoEndTime: "23:49",
-  MarinoWeekdayStartTime: "5:30",
-  MarinoWeekendStartTime: "8:00",
-  SquashWeekdayStartTime: "6:00",
-  SquashWeekdayEndTime: "23:49",
-  SquashWeekendEndTime: "21:00",
-  SquashSatStartTime: "08:00",
-  SquashSunStartTime: "10:00",
-};
-
-function stringToDay(str: string): Day {
-  if (str == "Sun") {
-    return Day.Sun;
-  } else if (str == "Mon") {
-    return Day.Mon;
-  } else if (str == "Tue") {
-    return Day.Tue;
-  } else if (str == "Wed") {
-    return Day.Wed;
-  } else if (str == "Thu") {
-    return Day.Thu;
-  } else if (str == "Fri") {
-    return Day.Fri;
-  } else if (str == "Sat") {
-    return Day.Sat;
-  } else {
-    return Day.Sun;
-  }
-}
-
-function roundToNearest30(time: string) {
-  const t = time.split(":");
-  if (parseInt(t[1]) < 30) {
-    return `${t[0]}:00`;
-  } else {
-    return `${t[0]}:30`;
-  }
-}
-
-const timeOptions: Intl.DateTimeFormatOptions = {
-  timeZone: "America/New_York",
-  hour12: false,
-  timeStyle: "short",
-};
-
-const dayOptions: Intl.DateTimeFormatOptions = {
-  timeZone: "America/New_York",
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-
-  weekday: "short",
-};
+import {
+  url,
+  Day,
+  Timings,
+  stringToDay,
+  roundToNearest30,
+  timeOptions,
+  dayOptions,
+} from "../constants";
 
 async function save(
   gym: Location,
@@ -102,38 +46,74 @@ async function save(
 }
 
 async function scrapeData(url: string) {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(url);
-  const image = await page.screenshot({
-    type: "jpeg",
-    quality: 100,
-    omitBackground: true,
-    fullPage: true,
-  });
-  console.log("took screen shot");
-  // const base64Image = await image.toString('base64');
-  // await page.screenshot({ path: "/tmp/example.png", fullPage: true });
-  await browser.close();
-  const personCount: string[] = [];
+  let options = {};
+  if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+    options = {
+      args: [
+        ...chrome.args,
+        "--hide-scrollbars",
+        "--no-sandbox",
+        "--disable-web-security",
+        "--disable-setuid-sandbox",
+      ],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: executablePath(),
+      headless: true,
+      ignoreHTTPSErrors: true,
+    };
+  } else {
+    options = {
+      args: [
+        ...chrome.args,
+        "--hide-scrollbars",
+        "--no-sandbox",
+        "--disable-web-security",
+        "--disable-setuid-sandbox",
+      ],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: executablePath(),
+      headless: true,
+      ignoreHTTPSErrors: true,
+    };
+  }
 
-  await Tesseract.recognize(image, "eng").then(({ text }) => {
-    const values = text.split("\n") || "";
-    try {
-      for (var line of values) {
-        if (line.includes("Last Count")) {
-          for (var each of line?.replace(/\s+/, "").match(/(\d+)/g) || "") {
-            personCount.push(each);
+  try {
+    const browser = await puppeteer.launch(options);
+    const page = await browser.newPage();
+    await page.goto(url);
+    const image = await page.screenshot({
+      type: "jpeg",
+      quality: 100,
+      omitBackground: true,
+      fullPage: true,
+    });
+    console.log("took screen shot");
+    // const base64Image = await image.toString('base64');
+    // await page.screenshot({ path: "/tmp/example.png", fullPage: true });
+    await browser.close();
+
+    const personCount: string[] = [];
+
+    await Tesseract.recognize(image, "eng").then(({ text }) => {
+      const values = text.split("\n") || "";
+      try {
+        for (var line of values) {
+          if (line.includes("Last Count")) {
+            for (var each of line?.replace(/\s+/, "").match(/(\d+)/g) || "") {
+              personCount.push(each);
+            }
           }
         }
+        console.log("read screen shot inside try");
+      } catch (e) {
+        console.log("oops hit the catch while using tesseract");
+        console.log(e);
       }
-      console.log("read screen shot inside try");
-    } catch (e) {
-      console.log("oops hit the catch while using tesseract");
-      console.log(e);
-    }
-  });
-  return personCount;
+    });
+    return personCount;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function scraper() {

@@ -313,15 +313,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/puppeteer@npm:^7.0.4":
-  version: 7.0.4
-  resolution: "@types/puppeteer@npm:7.0.4"
-  dependencies:
-    puppeteer: "*"
-  checksum: c84a44b054454c13935a9cf0f8983166e238532397af4f321c918d89b43a91f854460e3d0dda122f72c258b444dbcdc04ada950e35adc1938ff3b7831c6fd7a4
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:18.0.6":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
@@ -2370,7 +2361,6 @@ __metadata:
   dependencies:
     "@prisma/client": ^4.4.0
     "@types/node": 18.7.23
-    "@types/puppeteer": ^7.0.4
     "@types/react": 18.0.21
     "@types/react-dom": 18.0.6
     "@upstash/qstash": ^0.3.1
@@ -2383,6 +2373,7 @@ __metadata:
     inngest: ^0.8.7
     next: 12.3.1
     prisma: ^4.4.0
+    puppeteer: ^19.4.1
     react: 18.2.0
     react-dom: 18.2.0
     tesseract.js: ^1.0.19
@@ -2689,7 +2680,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer@npm:*":
+"puppeteer@npm:^19.4.1":
   version: 19.4.1
   resolution: "puppeteer@npm:19.4.1"
   dependencies:

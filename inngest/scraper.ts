@@ -3,7 +3,7 @@
 // import { NextApiRequest, NextApiResponse } from "next";
 // import { verifySignature } from "@upstash/qstash/nextjs";
 import { Location } from "@prisma/client";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { Tesseract } from "tesseract.ts";
 import axios from "axios";
 import { createScheduledFunction } from "inngest";
@@ -56,7 +56,7 @@ async function scrapeData(url: string) {
         "--disable-web-security",
         "--disable-setuid-sandbox",
       ],
-      defaultViewport: chrome.defaultViewport,
+      defaultViewport: null,
       executablePath: executablePath(),
       headless: true,
       ignoreHTTPSErrors: true,
@@ -70,16 +70,25 @@ async function scrapeData(url: string) {
         "--disable-web-security",
         "--disable-setuid-sandbox",
       ],
-      defaultViewport: chrome.defaultViewport,
+      defaultViewport: null,
       executablePath: executablePath(),
       headless: true,
       ignoreHTTPSErrors: true,
     };
   }
 
+  //1600 × 1666
+
   try {
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
+
+    await page.setViewport({
+      width: 800,
+      height: 833,
+      deviceScaleFactor: 1,
+    });
+
     await page.goto(url);
     const image = await page.screenshot({
       type: "jpeg",
@@ -87,9 +96,10 @@ async function scrapeData(url: string) {
       omitBackground: true,
       fullPage: true,
     });
+
     console.log("took screen shot");
     // const base64Image = await image.toString('base64');
-    // await page.screenshot({ path: "/tmp/example.png", fullPage: true });
+    await page.screenshot({ path: "example.png", fullPage: true });
     await browser.close();
 
     const personCount: string[] = [];

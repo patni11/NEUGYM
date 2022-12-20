@@ -22,6 +22,7 @@
     "@upstash/redis": "^1.18.1",
     "axios": "^1.2.1",
     "fs": "^0.0.1-security",
+    "inngest": "^0.8.7",
     "next": "12.3.1",
     "puppeteer": "^19.0.0",
     "react": "18.2.0",

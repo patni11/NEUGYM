@@ -27,7 +27,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tesseract.js": "^1.0.19",
-    "tesseract.ts": "^1.1.2"
+    "tesseract.ts": "^1.1.2",
+    "chrome-aws-lambda": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "18.7.23",

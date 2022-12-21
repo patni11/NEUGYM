@@ -17,18 +17,14 @@
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
-    "@upstash/qstash": "^0.3.1",
-    "@upstash/redis": "^1.18.1",
+    "@types/puppeteer-core": "^7.0.4",
     "axios": "^1.2.1",
+    "chrome-aws-lambda": "6.0.0",
     "fs": "^0.0.1-security",
     "inngest": "^0.8.7",
     "next": "12.3.1",
-    "puppeteer-core": "^6.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "tesseract.js": "^1.0.19",
-    "tesseract.ts": "^1.1.2",
-    "chrome-aws-lambda": "^6.0.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "18.7.23",

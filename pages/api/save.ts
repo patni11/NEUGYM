@@ -1,5 +1,4 @@
 import { Period } from "@prisma/client";
-
 import { prisma } from "../../server/db/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -23,7 +22,7 @@ export default async function handler(
           loc,
         },
       });
-      console.log("POSTED");
+
       res.status(200).json(post);
       break;
     default:

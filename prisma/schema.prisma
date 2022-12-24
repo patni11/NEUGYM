@@ -9,6 +9,9 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
+generator jsonSchema {
+  provider = "prisma-json-schema-generator"
+}
 
 enum Day {
   Sun

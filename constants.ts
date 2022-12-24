@@ -1,5 +1,5 @@
 import { Location } from "@prisma/client";
-const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+export const daysOfWeek = ["Sun", "Sat", "Fri", "Thu", "Wed", "Tue", "Mon"];
 const monthsStr = [
   "Jan",
   "Feb",
@@ -51,7 +51,7 @@ const gymToFile = {
   ],
 };
 
-const allGyms = [
+export const allGyms = [
   "Marino2Floor",
   "MarinoGymnasium",
   "Marino3Floor",
@@ -71,21 +71,7 @@ export const Timings = {
   SquashSunStartTime: "10:00",
 };
 
-const csvFields = [
-  "Date",
-  "Day",
-  "Min",
-  "Max",
-  "0:00",
-  "0:30",
-  "1:00",
-  "1:30",
-  "2:00",
-  "2:30",
-  "3:00",
-  "3:30",
-  "4:00",
-  "4:30",
+export const timeFields = [
   "5:00",
   "5:30",
   "6:00",
@@ -161,6 +147,27 @@ export function stringToDay(str: string): Day {
     return Day.Sat;
   } else {
     return Day.Sun;
+  }
+}
+
+export function whatday(str: string) {
+  switch (str) {
+    case "Mon":
+      return 1;
+    case "Tue":
+      return 2;
+    case "Wed":
+      return 3;
+    case "Thu":
+      return 4;
+    case "Fri":
+      return 5;
+    case "Sat":
+      return 6;
+    case "Sun":
+      return 7;
+    default:
+      return "Wrong, please enter a number between 1 and 7";
   }
 }
 

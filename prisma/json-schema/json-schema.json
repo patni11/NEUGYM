@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Period": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "time": {
+          "type": "string",
+          "default": ""
+        },
+        "frequency": {
+          "type": "integer",
+          "default": 0
+        },
+        "day": {
+          "type": "string",
+          "default": ""
+        },
+        "loc": {
+          "type": "string",
+          "default": "MarinoCardio",
+          "enum": [
+            "Marino2Floor",
+            "MarinoGymnasium",
+            "Marino3Floor",
+            "MarinoCardio",
+            "MarinoTrack",
+            "SquashBusters"
+          ]
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "period": {
+      "$ref": "#/definitions/Period"
+    }
+  }
+}

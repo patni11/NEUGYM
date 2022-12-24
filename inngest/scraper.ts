@@ -43,28 +43,37 @@ import {
 // }
 
 const getPersonCount = async (url: string) => {
-  const res = await fetch(url);
-  const html = await res.text();
+  try {
+    const res = await fetch(url);
 
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
+    if (res) {
+      const html = await res.text();
 
-  const divCounters = document.querySelectorAll(
-    'div[style="text-align:center;"]'
-  );
+      const dom = new JSDOM(html);
+      const document = dom.window.document;
 
-  const lastCounts: any[] = [];
+      const divCounters = document.querySelectorAll(
+        'div[style="text-align:center;"]'
+      );
 
-  divCounters.forEach((centerDiv) => {
-    const textContent = centerDiv.textContent;
-    const lastCountMatch = textContent.match(/Last Count: (\d+)/);
+      const lastCounts: any[] = [];
 
-    if (lastCountMatch) {
-      const lastCount = lastCountMatch[1];
-      lastCounts.push(lastCount);
+      divCounters.forEach((centerDiv) => {
+        const textContent = centerDiv.textContent;
+        const lastCountMatch = textContent.match(/Last Count: (\d+)/);
+
+        if (lastCountMatch) {
+          const lastCount = lastCountMatch[1];
+          lastCounts.push(lastCount);
+        }
+      });
+      return lastCounts;
+    } else {
+      return [];
     }
-  });
-  return lastCounts;
+  } catch (e) {
+    return [];
+  }
 };
 
 async function scrapeData(url: string) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { timeFields, daysOfWeek, whatday } from "../constants";
 import { svg } from "d3";
@@ -17,7 +17,7 @@ const HeatMap = ({ gymData, loc }) => {
     .scaleSequential([0, 120], d3.interpolatePiYG)
     .unknown("none");
 
-  useEffect(() => {
+  const heatmapFunction = useCallback(() => {
     setData(gymData);
     const svg = d3.select(svgRef.current);
 
@@ -145,6 +145,10 @@ const HeatMap = ({ gymData, loc }) => {
     drawYAxis();
     drawRectangles();
   }, []);
+
+  useEffect(() => {
+    heatmapFunction();
+  }, [heatmapFunction]);
 
   return (
     <div>

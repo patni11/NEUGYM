@@ -7,17 +7,16 @@ const HeatMap = ({ gymData, loc }) => {
   const svgRef = useRef();
   const [data, setData] = useState(gymData);
 
-  const Dimensions = {
-    width: 800,
-    height: 200,
-    padding: 15,
-  };
-
-  const color = d3
-    .scaleSequential([0, 120], d3.interpolatePiYG)
-    .unknown("none");
-
   const heatmapFunction = useCallback(() => {
+    const Dimensions = {
+      width: 800,
+      height: 200,
+      padding: 15,
+    };
+
+    const color = d3
+      .scaleSequential([0, 120], d3.interpolatePiYG)
+      .unknown("none");
     setData(gymData);
     const svg = d3.select(svgRef.current);
 

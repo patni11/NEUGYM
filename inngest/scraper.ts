@@ -45,8 +45,6 @@ import {
 const getPersonCount = async (url: string) => {
   try {
     const res = await fetch(url);
-
-    if (res) {
       const html = await res.text();
 
       const dom = new JSDOM(html);
@@ -60,16 +58,17 @@ const getPersonCount = async (url: string) => {
 
       divCounters.forEach((centerDiv) => {
         const textContent = centerDiv.textContent;
-        const lastCountMatch = textContent.match(/Last Count: (\d+)/);
+        
 
-        if (lastCountMatch) {
-          const lastCount = lastCountMatch[1];
-          lastCounts.push(lastCount);
+        if (textContent) {
+          const lastCountMatch = textContent.match(/Last Count: (\d+)/);
+          if (lastCountMatch){
+            const lastCount = lastCountMatch[1];
+            lastCounts.push(lastCount);
+          }
         }
       });
       return lastCounts;
-    } else {
-      return [];
     }
   } catch (e) {
     return [];

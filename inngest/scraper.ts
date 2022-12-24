@@ -45,31 +45,29 @@ import {
 const getPersonCount = async (url: string) => {
   try {
     const res = await fetch(url);
-      const html = await res.text();
+    const html = await res.text();
 
-      const dom = new JSDOM(html);
-      const document = dom.window.document;
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
 
-      const divCounters = document.querySelectorAll(
-        'div[style="text-align:center;"]'
-      );
+    const divCounters = document.querySelectorAll(
+      'div[style="text-align:center;"]'
+    );
 
-      const lastCounts: any[] = [];
+    const lastCounts: any[] = [];
 
-      divCounters.forEach((centerDiv) => {
-        const textContent = centerDiv.textContent;
-        
+    divCounters.forEach((centerDiv) => {
+      const textContent = centerDiv.textContent;
 
-        if (textContent) {
-          const lastCountMatch = textContent.match(/Last Count: (\d+)/);
-          if (lastCountMatch){
-            const lastCount = lastCountMatch[1];
-            lastCounts.push(lastCount);
-          }
+      if (textContent) {
+        const lastCountMatch = textContent.match(/Last Count: (\d+)/);
+        if (lastCountMatch) {
+          const lastCount = lastCountMatch[1];
+          lastCounts.push(lastCount);
         }
-      });
-      return lastCounts;
-    }
+      }
+    });
+    return lastCounts;
   } catch (e) {
     return [];
   }

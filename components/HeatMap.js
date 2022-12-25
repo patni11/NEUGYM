@@ -70,7 +70,7 @@ const HeatMap = ({ gymData, loc }) => {
         .attr("x", Dimensions.padding * 2)
         .attr(
           "y",
-          (d, i) => Dimensions.height - (i * 25 + 2 * Dimensions.padding)
+          (d, i) => Dimensions.height - (i * 20 + 4 * Dimensions.padding)
         )
         .attr("fill", "black")
         .style("font-size", "10")
@@ -90,14 +90,16 @@ const HeatMap = ({ gymData, loc }) => {
         .attr("class", "cell")
         .attr("fill", (item) => {
           let frequency = item["frequency"];
-          if (frequency <= 20) {
+          if (frequency <= 15) {
+            return "#87F5FB";
+          } else if (frequency <= 25) {
             return "#69b3a2";
           } else if (frequency <= 35) {
-            return "#FFFC99";
+            return "#FABC2A";
           } else if (frequency <= 50) {
             return "#F55D3E";
           } else {
-            return "#D11149";
+            return "#FF101F";
           }
         })
         .on("mouseover", (item, d) => {

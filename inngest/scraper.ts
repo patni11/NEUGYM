@@ -196,34 +196,16 @@ const handler = async () => {
     const roundedTime = roundToNearest30(CT);
 
     console.log("running Saves");
-
-    if (roundedTime >= Timings.MarinoWeekdayStartTime) {
-      await save(
-        Location.Marino2Floor,
-        personCount[0],
-        roundedTime,
-        dayUpdated
-      );
-      await save(
-        Location.MarinoGymnasium,
-        personCount[1],
-        roundedTime,
-        dayUpdated
-      );
-      await save(
-        Location.Marino3Floor,
-        personCount[2],
-        roundedTime,
-        dayUpdated
-      );
-      await save(
-        Location.MarinoCardio,
-        personCount[3],
-        roundedTime,
-        dayUpdated
-      );
-      await save(Location.MarinoTrack, personCount[4], roundedTime, dayUpdated);
-    }
+    await save(Location.Marino2Floor, personCount[0], roundedTime, dayUpdated);
+    await save(
+      Location.MarinoGymnasium,
+      personCount[1],
+      roundedTime,
+      dayUpdated
+    );
+    await save(Location.Marino3Floor, personCount[2], roundedTime, dayUpdated);
+    await save(Location.MarinoCardio, personCount[3], roundedTime, dayUpdated);
+    await save(Location.MarinoTrack, personCount[4], roundedTime, dayUpdated);
 
     if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
       if (roundedTime >= Timings.SquashWeekdayStartTime) {

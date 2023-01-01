@@ -69,6 +69,7 @@ const getPersonCount = async (url: string) => {
     });
     return lastCounts;
   } catch (e) {
+    console.log(e);
     return [];
   }
 };
@@ -188,6 +189,7 @@ const handler = async () => {
     const day = wholeDate.split(",")[0];
     const dayUpdated: Day = day ? stringToDay(day) : Day.Sun;
 
+    console.log("running handler");
     //Count
     let personCount: Array<number> = (await scraper()) as Array<number>;
     console.log(personCount);
@@ -240,8 +242,8 @@ const handler = async () => {
     // }
 
     console.log("done");
-  } catch ({ message }) {
-    console.log(message);
+  } catch (e) {
+    console.log(e);
   }
 };
 

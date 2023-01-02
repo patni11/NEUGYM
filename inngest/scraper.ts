@@ -63,7 +63,7 @@ const getPersonCount = async (url: string) => {
       if (textContent) {
         const lastCountMatch = textContent.match(/Last Count: (\d+)/);
         if (lastCountMatch) {
-          const lastCount = lastCountMatch[1];
+          const lastCount = parseInt(lastCountMatch[1]);
           lastCounts.push(lastCount);
         }
       }
@@ -106,7 +106,7 @@ async function scrapeData(url: string) {
     //   return lastCounts;
     // });
 
-    const personCount: string[] = await getPersonCount(url);
+    const personCount: number[] = await getPersonCount(url);
 
     // const image = await page.screenshot({
     //   type: "jpeg",
@@ -147,10 +147,9 @@ async function scraper() {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("scraping");
-      // const personCount = await scrapeData(url);
+      const personCount = await scrapeData(url);
       console.log("scraping done");
-      // resolve(personCount);
-      resolve([1, 2, 3, 4, 5, 6]);
+      resolve(personCount);
     } catch (e) {
       reject(e);
     }

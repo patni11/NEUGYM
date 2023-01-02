@@ -108,10 +108,33 @@
   margin-left: 0.5rem;
 }
 
+.svg_container {
+  display: inline;
+  position: relative;
+  overflow: hidden;
+  width: 80%;
+}
+
+.svg-content {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+  .svg_container {
+    width: "400px";
+  }
+}
+
+@media (max-width: 1000px) {
+  .svg_container {
+    width: "800px";
   }
 }
 

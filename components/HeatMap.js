@@ -21,11 +21,10 @@ const HeatMap = ({ gymData, loc }) => {
     const svg = d3.select(svgRef.current);
 
     svg
-      .attr("width", Dimensions.width)
-      .attr("height", Dimensions.height)
+      .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", [0, 0, Dimensions.width, Dimensions.height])
-      .attr("style", "max-width: auto; height: auto; height: intrinsic;")
-      .style("background-color", "white");
+      .style("background-color", "white")
+      .classed("svg-content", true);
 
     const xScale = d3
       .scaleLinear()
@@ -55,7 +54,7 @@ const HeatMap = ({ gymData, loc }) => {
         )
         .attr("y", Dimensions.height - Dimensions.padding)
         .attr("fill", "black")
-        .style("font-size", "10")
+        .style("font-size", "12")
         .style("font-family", "sans-serif")
         .style("text-anchor", "middle");
     };
@@ -73,7 +72,7 @@ const HeatMap = ({ gymData, loc }) => {
           (d, i) => Dimensions.height - (i * 20 + 4 * Dimensions.padding)
         )
         .attr("fill", "black")
-        .style("font-size", "10")
+        .style("font-size", "12")
         .style("font-family", "sans-serif")
         .style("text-anchor", "end");
     };
@@ -151,11 +150,7 @@ const HeatMap = ({ gymData, loc }) => {
     heatmapFunction();
   }, [heatmapFunction]);
 
-  return (
-    <div>
-      <svg ref={svgRef}></svg>
-    </div>
-  );
+  return <svg ref={svgRef}></svg>;
 };
 
 export default HeatMap;

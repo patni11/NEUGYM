@@ -28,39 +28,33 @@ const Home: React.FunctionComponent<Props> = (props) => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h3 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">NEU Gym Trends</a>
+          Welcome to <a href="">NEU Gym Trends</a>
         </h3>
         <br />
         <br />
-        {Object.entries(data).map(([loc, { values }]) => (
-          <div key={loc} style={{ position: "relative" }}>
-            <h2>{loc}</h2>
-
-            <div
-              id={"tooltip" + loc}
-              style={{ position: "absolute", right: "0", bottom: "15" }}
-            ></div>
-            <br />
-            <HeatMap gymData={values} loc={loc}></HeatMap>
-          </div>
-        ))}
-
-        {/* <HeatMap gymData={data["Marino2Floor"].values}></HeatMap> */}
-
-        {/* <div>
+        <div style={{ width: "80%", margin: "auto" }}>
           {Object.entries(data).map(([loc, { values }]) => (
-            <div key={loc}>
-              <h3>{loc}</h3>
-              {values.map(({ frequency, day, time }) => (
-                <div key={day + time}>
-                  <p>Frequency: {frequency}</p>
-                  <p>Day: {day}</p>
-                  <p>Time: {time}</p>
-                </div>
-              ))}
+            <div
+              key={loc}
+              style={{ position: "relative", width: "auto", height: "auto" }}
+            >
+              <h2>{loc}</h2>
+
+              <div
+                id={"tooltip" + loc}
+                style={{
+                  position: "relative",
+                  textAlign: "end",
+                  fontSize: "1.2em",
+                }}
+              ></div>
+              <br />
+              <div id="svg-container" className={styles.svg_container}>
+                <HeatMap gymData={values} loc={loc}></HeatMap>
+              </div>
             </div>
           ))}
-        </div> */}
+        </div>
       </main>
     </div>
   );
@@ -114,7 +108,7 @@ export async function getServerSideProps() {
         const v = {
           day: day,
           time: time,
-          frequency: Math.floor(Math.random() * 100),
+          frequency: Math.floor(Math.random() * 65),
         };
         value.push(v);
         //dummmyRes[gym] = { values: [...dummmyRes[gym]?.values || [], value] };

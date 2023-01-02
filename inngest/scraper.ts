@@ -199,47 +199,47 @@ const handler = async () => {
     const roundedTime = roundToNearest30(CT);
 
     console.log("running Saves");
-    // await save(Location.Marino2Floor, personCount[0], roundedTime, dayUpdated);
-    // await save(
-    //   Location.MarinoGymnasium,
-    //   personCount[1],
-    //   roundedTime,
-    //   dayUpdated
-    // );
-    // await save(Location.Marino3Floor, personCount[2], roundedTime, dayUpdated);
-    // await save(Location.MarinoCardio, personCount[3], roundedTime, dayUpdated);
-    // await save(Location.MarinoTrack, personCount[4], roundedTime, dayUpdated);
+    await save(Location.Marino2Floor, personCount[0], roundedTime, dayUpdated);
+    await save(
+      Location.MarinoGymnasium,
+      personCount[1],
+      roundedTime,
+      dayUpdated
+    );
+    await save(Location.Marino3Floor, personCount[2], roundedTime, dayUpdated);
+    await save(Location.MarinoCardio, personCount[3], roundedTime, dayUpdated);
+    await save(Location.MarinoTrack, personCount[4], roundedTime, dayUpdated);
 
-    // if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
-    //   if (roundedTime >= Timings.SquashWeekdayStartTime) {
-    //     await save(
-    //       Location.SquashBusters,
-    //       personCount[5],
-    //       roundedTime,
-    //       dayUpdated
-    //     );
-    //   }
-    // } else {
-    //   if (day == "Sat") {
-    //     if (roundedTime >= Timings.SquashSatStartTime) {
-    //       await save(
-    //         Location.SquashBusters,
-    //         personCount[5],
-    //         roundedTime,
-    //         dayUpdated
-    //       );
-    //     }
-    //   } else {
-    //     if (roundedTime >= Timings.SquashSunStartTime) {
-    //       await save(
-    //         Location.SquashBusters,
-    //         personCount[5],
-    //         roundedTime,
-    //         dayUpdated
-    //       );
-    //     }
-    //   }
-    // }
+    if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
+      if (roundedTime >= Timings.SquashWeekdayStartTime) {
+        await save(
+          Location.SquashBusters,
+          personCount[5],
+          roundedTime,
+          dayUpdated
+        );
+      }
+    } else {
+      if (day == "Sat") {
+        if (roundedTime >= Timings.SquashSatStartTime) {
+          await save(
+            Location.SquashBusters,
+            personCount[5],
+            roundedTime,
+            dayUpdated
+          );
+        }
+      } else {
+        if (roundedTime >= Timings.SquashSunStartTime) {
+          await save(
+            Location.SquashBusters,
+            personCount[5],
+            roundedTime,
+            dayUpdated
+          );
+        }
+      }
+    }
 
     console.log("done");
   } catch (e) {

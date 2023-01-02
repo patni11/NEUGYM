@@ -146,7 +146,6 @@ async function scrapeData(url: string) {
 async function scraper() {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("scraping");
       const personCount = await scrapeData(url);
       console.log("scraping done");
       resolve(personCount);
@@ -162,10 +161,8 @@ async function save(
   roundedTime: string,
   day: Day
 ) {
-  console.log(`Saving ${gym} file`);
-
   try {
-    console.log("Saving Data");
+    console.log(`Saving ${gym} file`);
 
     const post: Period = await prisma.period.create({
       data: {

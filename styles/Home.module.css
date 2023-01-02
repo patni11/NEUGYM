@@ -115,6 +115,23 @@
   width: 80%;
 }
 
+.gymEntry {
+  position: "relative";
+  width: "auto";
+  height: "auto";
+  margin-bottom: 3em;
+}
+
+.gymTitle {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.currentCount {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
 .svg-content {
   display: inline-block;
   position: absolute;
@@ -122,13 +139,43 @@
   left: 0;
 }
 
-@media (max-width: 600px) {
+.tooltip {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 750px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
   .svg_container {
     width: "400px";
+  }
+
+  .gymTitle {
+    font-size: 1em;
+  }
+
+  .currentCount {
+    font-size: 1em;
+  }
+
+  .tooltip {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .gymTitle {
+    font-size: 0.7em;
+  }
+
+  .currentCount {
+    font-size: 0.7em;
+  }
+
+  .tooltip {
+    font-size: 0.7em;
   }
 }
 

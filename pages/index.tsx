@@ -2,6 +2,7 @@ import styles from "../styles/Home.module.css";
 import { prisma } from "../server/db/client";
 import HeatMap from "../components/HeatMap";
 import { timeFields, daysOfWeek, allGyms } from "../constants";
+import { useState } from "react";
 
 // interface Props {
 //   [key: string]: {
@@ -12,17 +13,21 @@ import { timeFields, daysOfWeek, allGyms } from "../constants";
 // }
 
 interface Props {
-  [key: string]: {
-    values: {
-      frequency: number | null;
-      day: string;
-      time: string;
-    }[];
+  dummmyRes: {
+    [key: string]: {
+      values: {
+        frequency: number | null;
+        day: string;
+        time: string;
+      }[];
+    };
   };
+  currentCount: { [key: string]: number };
 }
 
 const Home: React.FunctionComponent<Props> = (props) => {
   const data = props.dummmyRes;
+  const currentCount = props.currentCount;
 
   return (
     <div className={styles.container}>
@@ -34,26 +39,31 @@ const Home: React.FunctionComponent<Props> = (props) => {
         <br />
         <div style={{ width: "80%", margin: "auto" }}>
           {Object.entries(data).map(([loc, { values }]) => (
-            <div
-              key={loc}
-              style={{ position: "relative", width: "auto", height: "auto" }}
-            >
-              <h2>{loc}</h2>
-
+            <div key={loc} className={styles.gymEntry}>
               <div
-                id={"tooltip" + loc}
                 style={{
-                  position: "relative",
-                  textAlign: "end",
-                  fontSize: "1.2em",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  verticalAlign: "center",
                 }}
-              ></div>
+              >
+                <p className={styles.gymTitle}>{loc}</p>
+                <p className={styles.currentCount}>
+                  Current Count:{" "}
+                  <span style={{ color: "#87F5FB" }}>
+                    <strong>{currentCount[loc]}</strong>
+                  </span>
+                </p>
+                <div id={"tooltip" + loc} className={styles.tooltip}></div>
+              </div>
+
               <br />
               <div id="svg-container" className={styles.svg_container}>
                 <HeatMap gymData={values} loc={loc}></HeatMap>
               </div>
             </div>
           ))}
+          <br />
         </div>
       </main>
     </div>
@@ -73,6 +83,22 @@ export async function getServerSideProps() {
   // });
 
   // data = JSON.parse(JSON.stringify(data));
+
+  let currentData = await prisma.period.findMany({
+    take: 6,
+    orderBy: {
+      id: "desc",
+    },
+  });
+
+  currentData = JSON.parse(JSON.stringify(currentData));
+  let currentCount: { [key: string]: number } = {};
+  for (const item of currentData) {
+    const { loc, frequency } = item;
+    if (!currentCount[loc]) {
+      currentCount[loc] = frequency;
+    }
+  }
 
   type Result = {
     [key: string]: {
@@ -154,7 +180,7 @@ export async function getServerSideProps() {
   // console.log("result:", dummmyRes);
 
   return {
-    props: { dummmyRes },
+    props: { dummmyRes, currentCount },
   };
 }
 

@@ -1,7 +1,8 @@
-import { Location } from "@prisma/client";
+import { Location, Period } from "@prisma/client";
 import { createScheduledFunction } from "inngest";
 import axios from "axios";
 import { JSDOM } from "jsdom";
+import { prisma } from "../server/db/client";
 
 import {
   url,
@@ -166,16 +167,26 @@ async function save(
 
   try {
     console.log("Saving Data");
-    await axios
-      .post("http://localhost:3000/api/save", {
+
+    const post: Period = await prisma.period.create({
+      data: {
         time: roundedTime,
         frequency: personCount,
         day: day,
         loc: gym,
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+      },
+    });
+
+    // await axios
+    //   .post("/api/save", {
+    //     time: roundedTime,
+    //     frequency: personCount,
+    //     day: day,
+    //     loc: gym,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
   } catch (error) {
     console.log(error);
   }
@@ -209,37 +220,38 @@ const handler = async () => {
     await save(Location.Marino3Floor, personCount[2], roundedTime, dayUpdated);
     await save(Location.MarinoCardio, personCount[3], roundedTime, dayUpdated);
     await save(Location.MarinoTrack, personCount[4], roundedTime, dayUpdated);
+    await save(Location.SquashBusters, personCount[5], roundedTime, dayUpdated);
 
-    if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
-      if (roundedTime >= Timings.SquashWeekdayStartTime) {
-        await save(
-          Location.SquashBusters,
-          personCount[5],
-          roundedTime,
-          dayUpdated
-        );
-      }
-    } else {
-      if (day == "Sat") {
-        if (roundedTime >= Timings.SquashSatStartTime) {
-          await save(
-            Location.SquashBusters,
-            personCount[5],
-            roundedTime,
-            dayUpdated
-          );
-        }
-      } else {
-        if (roundedTime >= Timings.SquashSunStartTime) {
-          await save(
-            Location.SquashBusters,
-            personCount[5],
-            roundedTime,
-            dayUpdated
-          );
-        }
-      }
-    }
+    // if (["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)) {
+    //   if (roundedTime >= Timings.SquashWeekdayStartTime) {
+    //     await save(
+    //       Location.SquashBusters,
+    //       personCount[5],
+    //       roundedTime,
+    //       dayUpdated
+    //     );
+    //   }
+    // } else {
+    //   if (day == "Sat") {
+    //     if (roundedTime >= Timings.SquashSatStartTime) {
+    //       await save(
+    //         Location.SquashBusters,
+    //         personCount[5],
+    //         roundedTime,
+    //         dayUpdated
+    //       );
+    //     }
+    //   } else {
+    //     if (roundedTime >= Timings.SquashSunStartTime) {
+    //       await save(
+    //         Location.SquashBusters,
+    //         personCount[5],
+    //         roundedTime,
+    //         dayUpdated
+    //       );
+    //     }
+    //   }
+    // }
 
     console.log("done");
   } catch (e) {

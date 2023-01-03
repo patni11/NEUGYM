@@ -1,0 +1,21 @@
+.navbar {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  margin-top: 1em;
+  padding: auto;
+  width: 80%;
+}
+
+.navbarItem {
+  font-size: 1.4em;
+  font-weight: bolder;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.navbarItem:active {
+  color: aquamarine;
+}

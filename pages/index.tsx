@@ -3,7 +3,7 @@ import { prisma } from "../server/db/client";
 import HeatMap from "../components/HeatMap";
 import { timeFields, daysOfWeek, allGyms } from "../constants";
 import { useState } from "react";
-
+import Navbar from "../components/navigation";
 // interface Props {
 //   [key: string]: {
 //     [key: string]: {
@@ -31,10 +31,17 @@ const Home: React.FunctionComponent<Props> = (props) => {
 
   return (
     <div className={styles.container}>
+      <Navbar />
       <main className={styles.main}>
-        <h3 className={styles.title}>
-          Welcome to <a href="">NEU Gym Trends</a>
-        </h3>
+        <br />
+
+        <p>
+          <span style={{ color: "#87F5FB" }}> {"Values <= 15,"} </span>
+          <span style={{ color: "#69b3a2" }}> {"Values <= 25,"} </span>
+          <span style={{ color: "#FABC2A" }}> {"Values <= 35,"} </span>
+          <span style={{ color: "#F55D3E" }}> {"Values <= 50,"} </span>
+          <span style={{ color: "#FF101F" }}> {"Values > 50"} </span>
+        </p>
         <br />
         <br />
         <div style={{ width: "80%", margin: "auto" }}>

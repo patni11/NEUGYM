@@ -17,7 +17,7 @@ function About() {
             <br></br>
             This website would help you manage your time and effectively choose
             the most efficient period of time on any day of the week. The
-            website collects and updates data every 30 minutes, so it's as up to
+            website collects and updates data every 30 minutes, so its as up to
             date as possible. <br></br>
             <br></br>
             <br></br>

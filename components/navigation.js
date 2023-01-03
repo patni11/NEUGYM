@@ -17,6 +17,7 @@ function Navbar() {
         className={styles.navbarItem}
         href="https://forms.gle/zxZQt5spBmQQ2w3K7"
         target="_blank"
+        rel="noopener noreferrer"
       >
         Feedback
       </a>

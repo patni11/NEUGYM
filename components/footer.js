@@ -14,9 +14,7 @@ const Footer = () => {
         </Link>
 
         <Link href="/terms">
-          <a href="/terms" className={styles.items}>
-            Terms
-          </a>
+          <a className={styles.items}>Terms</a>
         </Link>
       </div>
     </footer>

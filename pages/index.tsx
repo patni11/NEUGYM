@@ -13,7 +13,7 @@ import Navbar from "../components/navigation";
 // }
 
 interface Props {
-  dummmyRes: {
+  result: {
     [key: string]: {
       values: {
         frequency: number | null;
@@ -26,7 +26,7 @@ interface Props {
 }
 
 const Home: React.FunctionComponent<Props> = (props) => {
-  const data = props.dummmyRes;
+  const data = props.result;
   const currentCount = props.currentCount;
 
   return (
@@ -85,17 +85,17 @@ const Home: React.FunctionComponent<Props> = (props) => {
 
 export async function getServerSideProps() {
   // get the most recent data till past week from the database based on date
-  // let data = await prisma.period.groupBy({
-  //   by: ["loc", "day", "time"],
-  //   orderBy: {
-  //     loc: "asc",
-  //   },
-  //   _avg: {
-  //     frequency: true,
-  //   },
-  // });
+  let data = await prisma.period.groupBy({
+    by: ["loc", "day", "time"],
+    orderBy: {
+      loc: "asc",
+    },
+    _avg: {
+      frequency: true,
+    },
+  });
 
-  // data = JSON.parse(JSON.stringify(data));
+  data = JSON.parse(JSON.stringify(data));
 
   let currentData = await prisma.period.findMany({
     take: 6,
@@ -123,38 +123,39 @@ export async function getServerSideProps() {
     };
   };
 
-  // const result: Result = data.reduce((acc, curr) => {
-  //   const {
-  //     _avg: { frequency },
-  //     loc,
-  //     day,
-  //     time,
-  //   } = curr;
-  //   if (!acc[loc]) {
-  //     acc[loc] = { values: [] };
-  //   }
-  //   acc[loc].values.push({ frequency, day, time });
-  //   return acc;
-  // }, {} as Result);
+  const result: Result = data.reduce((acc, curr) => {
+    const {
+      _avg: { frequency },
+      loc,
+      day,
+      time,
+    } = curr;
+    if (!acc[loc]) {
+      acc[loc] = { values: [] };
+    }
+    acc[loc].values.push({ frequency, day, time });
+    return acc;
+  }, {} as Result);
 
   // console.log(result);
-
-  const dummmyRes: Result = {};
-  allGyms.forEach((gym) => {
-    const value: { day: string; time: string; frequency: number | null }[] = [];
-    daysOfWeek.forEach((day) => {
-      timeFields.forEach((time) => {
-        const v = {
-          day: day,
-          time: time,
-          frequency: Math.floor(Math.random() * 65),
-        };
-        value.push(v);
-        //dummmyRes[gym] = { values: [...dummmyRes[gym]?.values || [], value] };
-      });
-    });
-    dummmyRes[gym] = { values: value };
-  });
+  // let count = 0;
+  // const dummmyRes: Result = {};
+  // allGyms.forEach((gym) => {
+  //   const value: { day: string; time: string; frequency: number | null }[] = [];
+  //   daysOfWeek.forEach((day) => {
+  //     timeFields.forEach((time) => {
+  //       const v = {
+  //         day: day,
+  //         time: time,
+  //         frequency: Math.floor(Math.random() * 65),
+  //       };
+  //       value.push(v);
+  //       count += 1;
+  //       //dummmyRes[gym] = { values: [...dummmyRes[gym]?.values || [], value] };
+  //     });
+  //   });
+  //   dummmyRes[gym] = { values: value };
+  // });
 
   // const result: {
   //   [key: string]: {
@@ -190,10 +191,8 @@ export async function getServerSideProps() {
   //   result[loc][day][time] = frequency;
   // }
 
-  // console.log("result:", dummmyRes);
-
   return {
-    props: { dummmyRes, currentCount },
+    props: { result, currentCount },
   };
 }
 

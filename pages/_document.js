@@ -7,7 +7,7 @@ export default function Document() {
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910721408101176"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></script>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script

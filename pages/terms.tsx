@@ -9,7 +9,7 @@ const Terms = () => {
 
       <p>
         These terms and conditions outline the rules and regulations for the use
-        of neugym's Website, located at neugym.com.
+        of neugym&aposs Website, located at neugym.com.
       </p>
 
       <p>
@@ -20,16 +20,17 @@ const Terms = () => {
 
       <p>
         The following terminology applies to these Terms and Conditions, Privacy
-        Statement and Disclaimer Notice and all Agreements: "Client", "You" and
-        "Your" refers to you, the person log on this website and compliant to
-        the Company’s terms and conditions. "The Company", "Ourselves", "We",
-        "Our" and "Us", refers to our Company. "Party", "Parties", or "Us",
-        refers to both the Client and ourselves. All terms refer to the offer,
-        acceptance and consideration of payment necessary to undertake the
-        process of our assistance to the Client in the most appropriate manner
-        for the express purpose of meeting the Client’s needs in respect of
-        provision of the Company’s stated services, in accordance with and
-        subject to, prevailing law of Netherlands. Any use of the above
+        Statement and Disclaimer Notice and all Agreements: &quotClient&quot,
+        &quotYou&quot and &quotYour&quot refers to you, the person log on this
+        website and compliant to the Companys terms and conditions. &quotThe
+        Company&quot, &quotOurselves&quot, &quotWe&quot, &quotOur&quot and
+        &quotUs&quot, refers to our Company. &quotParty&quot, &quotParties&quot,
+        or &quotUs&quot, refers to both the Client and ourselves. All terms
+        refer to the offer, acceptance and consideration of payment necessary to
+        undertake the process of our assistance to the Client in the most
+        appropriate manner for the express purpose of meeting the Clients needs
+        in respect of provision of the Companys stated services, in accordance
+        with and subject to, prevailing law of Netherlands. Any use of the above
         terminology or other words in the singular, plural, capitalization
         and/or he/she or they, are taken as interchangeable and therefore as
         referring to same.
@@ -41,11 +42,11 @@ const Terms = () => {
 
       <p>
         We employ the use of cookies. By accessing neugym, you agreed to use
-        cookies in agreement with the neugym's Privacy Policy.{" "}
+        cookies in agreement with the neugym&aposs Privacy Policy.{" "}
       </p>
 
       <p>
-        Most interactive websites use cookies to let us retrieve the user’s
+        Most interactive websites use cookies to let us retrieve the users
         details for each visit. Cookies are used by our website to enable the
         functionality of certain areas to make it easier for people visiting our
         website. Some of our affiliate/advertising partners may also use
@@ -158,7 +159,7 @@ const Terms = () => {
         other Website information so long as the link: (a) is not in any way
         deceptive; (b) does not falsely imply sponsorship, endorsement or
         approval of the linking party and its products and/or services; and (c)
-        fits within the context of the linking party’s site.
+        fits within the context of the linking party&aposs site.
       </p>
 
       <p>
@@ -214,7 +215,7 @@ const Terms = () => {
       </ul>
 
       <p>
-        No use of neugym's logo or other artwork will be allowed for linking
+        No use of neugym&aposs logo or other artwork will be allowed for linking
         absent a trademark license agreement.
       </p>
 
@@ -323,4 +324,4 @@ const Terms = () => {
   );
 };
 
-export default Privacy;
+export default Terms;

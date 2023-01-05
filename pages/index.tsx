@@ -4,6 +4,7 @@ import HeatMap from "../components/HeatMap";
 import { timeFields, daysOfWeek, allGyms } from "../constants";
 import { useState } from "react";
 import Navbar from "../components/navigation";
+import Footer from "../components/footer";
 // interface Props {
 //   [key: string]: {
 //     [key: string]: {
@@ -72,6 +73,7 @@ const Home: React.FunctionComponent<Props> = (props) => {
           <br />
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

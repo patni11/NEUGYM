@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/navigation";
 import styles from "../styles/About.module.css";
-
+import Footer from "../components/footer";
 function About() {
   return (
     <div className={styles.container}>
@@ -34,6 +34,7 @@ function About() {
           </p>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

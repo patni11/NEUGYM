@@ -34,13 +34,6 @@ const Home: React.FunctionComponent<Props> = (props) => {
       <Navbar />
       <main className={styles.main}>
         <br />
-
-        <h3>
-          {" "}
-          Currently using dummy data. Website is collecting initial data. Will
-          be functional from <span style={{ color: "#87F5FB" }}>10 Jan</span>
-        </h3>
-
         <p>
           <span style={{ color: "#87F5FB" }}> {"Values <= 15,"} </span>
           <span style={{ color: "#69b3a2" }}> {"Values <= 25,"} </span>

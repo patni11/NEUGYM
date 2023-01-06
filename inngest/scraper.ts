@@ -266,6 +266,6 @@ const handler = async () => {
 // DOES NOT WORK AT ALL throws error - TypeError: resolver is not a function
 export default createScheduledFunction(
   "handler", // The name of your function, used for observability.
-  "0,30 10-4 * * *", // The cron syntax for the function
+  "CRON_TZ=EST 0,30 5-23 * * *", // The cron syntax for the function
   handler // The function code, defined above.
 );

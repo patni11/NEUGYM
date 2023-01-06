@@ -196,7 +196,6 @@ const handler = async () => {
     const day = wholeDate.split(",")[0];
     const dayUpdated: Day = day ? stringToDay(day) : Day.Sun;
 
-    console.log("running handler");
     //Count
     let personCount: Array<number> = (await scraper()) as Array<number>;
     console.log(personCount);
@@ -267,6 +266,6 @@ const handler = async () => {
 // DOES NOT WORK AT ALL throws error - TypeError: resolver is not a function
 export default createScheduledFunction(
   "handler", // The name of your function, used for observability.
-  "0,30 5-23 * * *", // The cron syntax for the function
+  "0,30 10-4 * * *", // The cron syntax for the function
   handler // The function code, defined above.
 );

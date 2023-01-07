@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { timeFields, daysOfWeek, whatday } from "../constants";
+import {
+  timeFields,
+  daysOfWeek,
+  whatday,
+  timeStringToDate,
+} from "../constants";
 import { svg } from "d3";
 
 const HeatMap = ({ gymData, loc }) => {
@@ -27,12 +32,69 @@ const HeatMap = ({ gymData, loc }) => {
       .classed("svg-content", true);
 
     const xScale = d3
-      .scaleLinear()
-      .domain([0, 38])
+      .scaleTime()
+      .domain([new Date(0, 0, 0, 5, 0, 0, 0), new Date(0, 0, 0, 24, 0, 0, 0)])
       .range([
         Dimensions.padding * 2,
         Dimensions.width - 2 * Dimensions.padding,
       ]);
+
+    const drawXAxis = () => {
+      const tickValues = [];
+      for (let i = 5; i <= 24; i++) {
+        tickValues.push(new Date(0, 0, 0, i, 0, 0, 0));
+      }
+
+      const xAxis = d3
+        .axisBottom(xScale)
+        .tickValues(tickValues)
+        .tickFormat(d3.timeFormat("%H"));
+      svg
+        .append("g")
+        .attr(
+          "transform",
+          `translate(${Dimensions.padding}, ${Dimensions.height -
+            2 * Dimensions.padding})`
+        )
+        .call(xAxis)
+        .style("font-size", "12")
+        .style("color", "black")
+        .style("font-family", "sans-serif")
+        .style("text-anchor", "middle");
+    };
+
+    // const drawXAxis = () => {
+    //   const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%H"));
+    //   svg
+    //     .append("g")
+    //     .attr(
+    //       "transform",
+    //       `translate(0, ${Dimensions.height - 2 * Dimensions.padding})`
+    //     )
+
+    //     .call(xAxis)
+    //     .style("font-size", "12")
+    //     .style("color", "black")
+    //     .style("font-family", "sans-serif")
+    //     .style("text-anchor", "middle");
+    // };
+
+    // const drawXAxis = () => {
+    //   svg
+    //     .append("g")
+    //     .selectAll("text")
+    //     .data(timeFields.map((t) => (t.includes(":00") ? t : "")))
+    //     .join("text")
+    //     .text((t) => `${t.replace(":00", "")}`)
+    //     .attr("x", (t, i) =>
+    //       i % 2 == 0 ? xScale(i) + Dimensions.padding : (t = null)
+    //     )
+    //     .attr("y", Dimensions.height - Dimensions.padding)
+    //     .attr("fill", "black")
+    //     .style("font-size", "12")
+    //     .style("font-family", "sans-serif")
+    //     .style("text-anchor", "middle");
+    // };
 
     const yScale = d3
       .scaleTime()
@@ -41,24 +103,6 @@ const HeatMap = ({ gymData, loc }) => {
         Dimensions.padding * 2,
         Dimensions.height - 2 * Dimensions.padding,
       ]);
-
-    const drawXAxis = () => {
-      svg
-        .append("g")
-        .selectAll("text")
-        .data(timeFields.map((t) => (t.includes(":00") ? t : "")))
-        .join("text")
-        .text((t) => `${t.replace(":00", "")}`)
-        .attr("x", (t, i) =>
-          i % 2 == 0 ? xScale(i) + Dimensions.padding : (t = null)
-        )
-        .attr("y", Dimensions.height - Dimensions.padding)
-        .attr("fill", "black")
-        .style("font-size", "12")
-        .style("font-family", "sans-serif")
-        .style("text-anchor", "middle");
-    };
-
     const drawYAxis = () => {
       svg
         .append("g")
@@ -119,13 +163,13 @@ const HeatMap = ({ gymData, loc }) => {
           return item["day"];
         })
         .attr("time", (item) => {
-          return item["time"];
+          return timeStringToDate(item["time"]);
         })
         .attr("count", (item) => {
           return item["frequency"];
         })
         .attr("height", () => {
-          return (Dimensions.height - 2 * Dimensions.padding) / 7 - 1;
+          return (Dimensions.height - 2 * Dimensions.padding) / 7 - 2;
         })
         .attr("y", (item, i) => {
           return (
@@ -134,11 +178,13 @@ const HeatMap = ({ gymData, loc }) => {
           );
         })
         .attr("width", () => {
-          return (Dimensions.width - 2 * Dimensions.padding) / 38 - 1;
+          return (Dimensions.width - 2 * Dimensions.padding) / 38 - 2;
         })
         .attr("x", (item, i) => {
-          return xScale(i % 38) + Dimensions.padding;
-        });
+          return xScale(timeStringToDate(item["time"])) + Dimensions.padding;
+        })
+        .attr("stroke", "black")
+        .attr("stroke-width", 2);
     };
 
     drawXAxis();

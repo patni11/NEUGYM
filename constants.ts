@@ -261,4 +261,11 @@ export function generateTimeSlots(
   );
 }
 
+export function timeStringToDate(timeString: string) {
+  const parts = timeString.split(":");
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  return new Date(0, 0, 0, hours, minutes, 0, 0);
+}
+
 //new Date().toLocaleString("en-US",

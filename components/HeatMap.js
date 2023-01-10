@@ -48,7 +48,7 @@ const HeatMap = ({ gymData, loc }) => {
       const xAxis = d3
         .axisBottom(xScale)
         .tickValues(tickValues)
-        .tickFormat(d3.timeFormat("%H"));
+        .tickFormat(d3.timeFormat("%I%p"));
       svg
         .append("g")
         .attr(

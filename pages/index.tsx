@@ -35,6 +35,15 @@ const Home: React.FunctionComponent<Props> = (props) => {
       <Navbar />
       <main className={styles.main}>
         <br />
+        <p style={{ width: "75%" }}>
+          Looking for the best times to visit the gym at Northeastern
+          University? Our app can help! Our app tracks gym attendance in
+          real-time and provides you with the information you need to plan your
+          workout around the least crowded times. Never wait in line for a
+          machine again with our app's helpful crowd prediction feature. Stay
+          healthy and fit by using our app to find the best times to visit the
+          gym at Northeastern University.
+        </p>
         <p>
           <span style={{ color: "#87F5FB" }}> {"Values <= 15,"} </span>
           <span style={{ color: "#69b3a2" }}> {"Values <= 25,"} </span>

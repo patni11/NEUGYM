@@ -95,6 +95,7 @@ export async function getServerSideProps() {
     orderBy: {
       loc: "asc",
     },
+    take: 3192,
     _avg: {
       frequency: true,
     },
